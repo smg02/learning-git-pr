@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 
+          fetch-depth: 0 # Essential for git diff calculation against base branches
 
       - name: Set up Python
         uses: actions/setup-python@v5 
@@ -23,12 +23,14 @@ jobs:
           python-version: '3.11'
 
       - name: Install Dependencies
-        run: pip install openai
+        run: pip install google-genai
 
       - name: Run AI Review
         env:
-          OPENROUTER_API_KEY: ${{ secrets.AI_API_KEY }} 
+          # Passes your existing secret directly to the native Google script
+          AI_API_KEY: ${{ secrets.AI_API_KEY }} 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
         run: python .github/scripts/ai_review.py
