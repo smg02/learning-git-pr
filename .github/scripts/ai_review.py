@@ -67,8 +67,10 @@ def post_github_comment(comment):
     repo = os.environ["REPO"]
     pr_number = os.environ["PR_NUMBER"]
     
+    # FIX: Added the critical '/' slash delimiter between github.com and /repos/
     # Corrected the URL to properly format with a slash delimiter
-    url = f"https://github.com{repo}/issues/{pr_number}/comments"
+    url = f"https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
+    
     headers = {
         "Authorization": f"Bearer {token}",
         "Accept": "application/vnd.github+json",
