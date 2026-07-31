@@ -85,7 +85,7 @@ def post_github_comment(comment):
             if response.status == 201:
                 print("Review comment posted successfully.")
     except Exception as e:
-        print(f"Failed to post comment to GitHub: {e}")
+        print(f"Failed to post comment to GitHub API: {e}")
 
 def main():
     diff = get_git_diff()
